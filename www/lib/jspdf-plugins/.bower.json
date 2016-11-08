@@ -1,0 +1,20 @@
+{
+  "name": "jspdf-plugins",
+  "homepage": "https://github.com/mrrio/jspdf",
+  "description": "Plugins for jsPDF",
+  "keywords": [
+    "pdf",
+    "jsPDF",
+    "jspdf-plugins"
+  ],
+  "license": "MIT",
+  "_release": "3bed957653",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "3bed95765332ef06abe41df5422681be70c81add"
+  },
+  "_source": "https://github.com/mwils/jsPDF-plugins.git",
+  "_target": "*",
+  "_originalSource": "jsPDF-plugins"
+}
