@@ -39,6 +39,7 @@ SaveAsPdf.prototype = {
 
     var doc=new jsPDF();
 
+    console.log("testsing: "+imageUrls.length);
     for(var i in imageUrls){
       var base64="data:image/jpeg;base64,"+imageUrls[i];
       doc.addImage(base64, 'JPEG', 0, 0);
