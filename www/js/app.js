@@ -30,22 +30,26 @@ angular.module('starter', ['ionic', 'ngCordova'])
   })
 
   .controller('MainController', function ($scope, $timeout, ImagesFactory, $cordovaPrinter) {
-    var imageUrls=[];
+    $scope.imageUrls=[];
     $scope.imageUrl='http://placehold.it/350x350';
     $scope.takePhoto=function (imageId) {
 
       document.addEventListener("deviceready", function () {
         ImagesFactory.takePhoto().then(function (response) {
-          imageUrls.push(response);
-          $scope.imageLength=imageUrls.length;
+          $scope.imageUrls.push(response);
+          $scope.imageLength=$scope.imageUrls.length;
           $scope.imageUrl="data:image/jpeg;base64,"+response;
+          // console.log("Testing", $scope.imageUrls);
         });
       }, false);
 
     };
 
     $scope.saveImage=function () {
-      saveAsPdf.addImage(imageUrls);
+      console.log($scope.imageUrls.length);
+      $timeout(function() {
+        saveAsPdf.addImage($scope.imageUrls);
+      }, 100);
       $scope.imageLength=0;
       var imageUrls=[];
     };

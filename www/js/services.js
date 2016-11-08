@@ -2,15 +2,7 @@ angular.module('starter')
   .factory('ImagesFactory', function($q ,$cordovaCamera) {
 
     if (window.cordova) {
-      var optionsCamera = {
-        quality: 70,
-        // destinationType: Camera.DestinationType.DATA_URL,
-        // sourceType: Camera.PictureSourceType.CAMERA,
-        targetWidth: 800,
-        targetHeight: 800,
-        saveToPhotoAlbum: true,
-        correctOrientation: true
-      }
+
     }
 
     return {
@@ -19,8 +11,19 @@ angular.module('starter')
     };
 
     function takePhoto() {
+
       var defer = $q.defer();
       if (window.cordova) {
+        var optionsCamera = {
+          quality: 70,
+          destinationType: Camera.DestinationType.DATA_URL,
+          sourceType: Camera.PictureSourceType.CAMERA,
+          targetWidth: 800,
+          targetHeight: 800,
+          saveToPhotoAlbum: true,
+          correctOrientation: true
+        };
+
         $cordovaCamera.getPicture(optionsCamera).then(function (res) {
           defer.resolve(res);
         }, function (err) {
