@@ -7,7 +7,6 @@ angular.module('starter')
 
     return {
       takePhoto:takePhoto,
-      test: test,
       writeFile: writeFile,
       createFile:createFile
     };
@@ -39,16 +38,9 @@ angular.module('starter')
       return defer.promise;
     }
 
-    function test() {
-
-      cordova.plugins.image2pdf.convert("img/test.jpg", "test.pdf",
-        function () { console.log("Done") },
-        function (code) { console.log("Error code " + code) })
-
-    }
-
-    function writeFile(pdfOutput) {
-      $cordovaFile.writeFile(cordova.file.externalRootDirectory, "test.pdf", pdfOutput, true)
+    function writeFile(pdfOutput, nameString) {
+      var namePDF=nameString+".pdf";
+      $cordovaFile.writeFile(cordova.file.externalRootDirectory, namePDF, pdfOutput, true)
         .then(function (success) {
           console.log("write success");
           // success
@@ -59,9 +51,10 @@ angular.module('starter')
         });
     }
 
-    function createFile() {
+    function createFile(nameString) {
+      var namePDF=nameString+".pdf";
       console.log(cordova.file.externalRootDirectory);
-      $cordovaFile.createFile(cordova.file.externalRootDirectory, "test.pdf",  true)
+      $cordovaFile.createFile(cordova.file.externalRootDirectory, namePDF,  true)
         .then(function (success) {
           // success
         }, function (error) {

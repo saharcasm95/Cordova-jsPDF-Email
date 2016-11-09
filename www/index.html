@@ -50,13 +50,11 @@
 
       </ion-header-bar>
       <ion-content  class="padding" ng-controller="MainController">
-        <button ng-click="takePhoto()">Take Photo</button>
+        <button ng-click="takePhoto()">
+          <span ng-if="imageLength>0">Take Another Photo</span>
+          <span ng-if="imageLength==0">Take Photo</span>
+        </button>
         <button ng-if="imageLength>0" ng-click="saveImage()">Generate Pdf</button>
-        <button ng-click="print()">Generate Pdf</button>
-        <div class="padding">
-          <img ng-src="{{imageUrl}}">
-
-        </div>
       </ion-content>
     </ion-pane>
   </body>

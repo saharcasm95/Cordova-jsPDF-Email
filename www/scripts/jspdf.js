@@ -38,10 +38,11 @@ SaveAsPdf.prototype = {
   addImage:function(imageUrls){
 
     var doc=new jsPDF();
+
     for(var i in imageUrls){
       var base64="data:image/jpeg;base64,"+imageUrls[i];
-      // console.log(base64);
       doc.addImage(base64, 'JPEG', 0, 0);
+      if (i==imageUrls.length-1) break;
       doc.addPage();
     }
     return doc.output("blob");
