@@ -44,29 +44,7 @@ SaveAsPdf.prototype = {
       doc.addImage(base64, 'JPEG', 0, 0);
       doc.addPage();
     }
-
-    var pdfOutput=doc.output("blob");
-
-    console.log(pdfOutput);
-
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-
-    function fail() {
-      console.log('weird!!!!!!')
-    }
-    function gotFS(fileSystem) {
-      fileSystem.root.getFile("test.pdf", {create: true, exclusive: false}, gotFileEntry, fail);
-    }
-
-    function gotFileEntry(fileEntry) {
-      fileEntry.createWriter(gotFileWriter, fail);
-    }
-    function gotFileWriter(writer) {
-      console.log("here i am");
-      writer.write(pdfOutput);
-    }
-
-
+    return doc.output("blob");
   }
 };
 

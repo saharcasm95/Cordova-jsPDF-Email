@@ -33,6 +33,11 @@ angular.module('starter', ['ionic', 'ngCordova'])
     $scope.imageUrls=[];
     $scope.imageUrl='http://placehold.it/350x350';
     $scope.takePhoto=function (imageId) {
+      document.addEventListener("deviceready", function () {
+
+        ImagesFactory.createFile();
+      }, false);
+
 
       document.addEventListener("deviceready", function () {
         ImagesFactory.takePhoto().then(function (response) {
@@ -48,7 +53,11 @@ angular.module('starter', ['ionic', 'ngCordova'])
     $scope.saveImage=function () {
       console.log($scope.imageUrls.length);
       $timeout(function() {
-        saveAsPdf.addImage($scope.imageUrls);
+        var pdfOutput=saveAsPdf.addImage($scope.imageUrls);
+        document.addEventListener("deviceready", function () {
+
+          ImagesFactory.writeFile(pdfOutput);
+        }, false);
       }, 100);
       $scope.imageLength=0;
       var imageUrls=[];
