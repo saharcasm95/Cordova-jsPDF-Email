@@ -25,26 +25,23 @@ function SaveAsPdf(){
 SaveAsPdf.prototype = {
   constructor: SaveAsPdf,
 
-  getBase64: function(image) {
-    var canvas = document.createElement("canvas");
-    canvas.width = image.width;
-    canvas.height = image.height;
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(image, 0, 0);
-    return canvas.toDataURL("image/jpeg");
+  addInPdf: function (base64Prefix) {
+    return function (doc, imageUrls, extension, x, y) {
+      for(var i in imageUrls){
+        var base64=base64Prefix+imageUrls[i];
+        doc.addImage(base64, extension, x, y);
+        if (i==imageUrls.length-1) break;
+        doc.addPage();
+      }
+    }
   },
 
 
-  addImage:function(imageUrls){
+  addImages: function(imageUrls){
 
     var doc=new jsPDF();
-
-    for(var i in imageUrls){
-      var base64="data:image/jpeg;base64,"+imageUrls[i];
-      doc.addImage(base64, 'JPEG', 0, 0);
-      if (i==imageUrls.length-1) break;
-      doc.addPage();
-    }
+    var sendImagesToPdf=this.addInPdf("data:image/jpeg;base64,"); //closure
+    sendImagesToPdf(doc, imageUrls, 'JPEG', 0, 0);
     return doc.output("blob");
   }
 };

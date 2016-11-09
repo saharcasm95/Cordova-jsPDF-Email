@@ -1,5 +1,5 @@
 angular.module('starter')
-  .factory('ImagesFactory', function($q ,$cordovaCamera, $cordovaFile) {
+  .factory('ImagesFactory', function($q ,$cordovaCamera, $cordovaFile, $cordovaEmailComposer) {
 
     if (window.cordova) {
 
@@ -8,7 +8,8 @@ angular.module('starter')
     return {
       takePhoto:takePhoto,
       writeFile: writeFile,
-      createFile:createFile
+      createFile:createFile,
+      emailPdf: emailPdf
     };
 
     function takePhoto() {
@@ -53,7 +54,7 @@ angular.module('starter')
 
     function createFile(nameString) {
       var namePDF=nameString+".pdf";
-      console.log(cordova.file.externalRootDirectory);
+
       $cordovaFile.createFile(cordova.file.externalRootDirectory, namePDF,  true)
         .then(function (success) {
           // success
@@ -61,6 +62,28 @@ angular.module('starter')
           // error
           console.log("error");
         });
+    }
+    function emailPdf(nameString) {
+      var namePDF=cordova.file.externalRootDirectory+nameString+".pdf";
+      console.log(namePDF)
+
+      var email = {
+        to: 'sahar.pyaari@gmail.com',
+        cc: 'nooresahar95@gmail.com',
+        bcc: ['k122140@nu.edu.pk'],
+        attachments: [
+          namePDF
+        ],
+        subject: 'Cordova Email Composer Testing',
+        body: 'This is a testing email. Please find the Attachment',
+        isHtml: true
+      };
+
+      $cordovaEmailComposer.open(email).then(null, function (response) {
+        console.log("here i am");
+        // user cancelled email
+      });
+
     }
 
 

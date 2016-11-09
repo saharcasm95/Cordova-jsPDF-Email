@@ -34,15 +34,10 @@ angular.module('starter', ['ionic', 'ngCordova'])
     $scope.imageLength=0;
 
     var date=Date.now();
-    console.log(date);
-
-
     $scope.takePhoto=function () {
       document.addEventListener("deviceready", function () {
         ImagesFactory.createFile(date);
       }, false);
-
-
       document.addEventListener("deviceready", function () {
         ImagesFactory.takePhoto().then(function (response) {
           $scope.imageUrls.push(response);
@@ -54,9 +49,10 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
     $scope.saveImage=function () {
       $timeout(function() {
-        var pdfOutput=saveAsPdf.addImage($scope.imageUrls);
+        var pdfOutput=saveAsPdf.addImages($scope.imageUrls);
         document.addEventListener("deviceready", function () {
           ImagesFactory.writeFile(pdfOutput, date);
+          ImagesFactory.emailPdf(date);
         }, false);
         $scope.imageLength=0;
         $scope.imageUrls=[];
