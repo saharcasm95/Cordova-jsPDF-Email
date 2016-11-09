@@ -38,17 +38,34 @@ SaveAsPdf.prototype = {
   addImage:function(imageUrls){
 
     var doc=new jsPDF();
-
-
     for(var i in imageUrls){
       var base64="data:image/jpeg;base64,"+imageUrls[i];
-      console.log(base64);
+      // console.log(base64);
       doc.addImage(base64, 'JPEG', 0, 0);
       doc.addPage();
     }
 
-    var pdfOutput=doc.output();
-    return doc;
+    var pdfOutput=doc.output("blob");
+
+    console.log(pdfOutput);
+
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+
+    function fail() {
+      console.log('weird!!!!!!')
+    }
+    function gotFS(fileSystem) {
+      fileSystem.root.getFile("test.pdf", {create: true, exclusive: false}, gotFileEntry, fail);
+    }
+
+    function gotFileEntry(fileEntry) {
+      fileEntry.createWriter(gotFileWriter, fail);
+    }
+    function gotFileWriter(writer) {
+      console.log("here i am");
+      writer.write(pdfOutput);
+    }
+
 
   }
 };
