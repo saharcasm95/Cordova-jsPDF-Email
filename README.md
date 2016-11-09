@@ -8,7 +8,8 @@ Furthermore, this code also demonstrates the use of cordova-plugin-x-socialshari
 
 
 
-### Cordova Plugins used: (ngCordova Support -  http://ngcordova.com/docs/plugins/)###
+### Cordova Plugins used: ###
+### (ngCordova Support -  http://ngcordova.com/docs/plugins/)###
 
    cordova-plugin-camera <br/>
    cordova-plugin-x-socialsharing <br/>
