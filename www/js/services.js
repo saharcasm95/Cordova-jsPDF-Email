@@ -1,5 +1,5 @@
 angular.module('starter')
-  .factory('ImagesFactory', function($q ,$cordovaCamera, $cordovaFile, $cordovaEmailComposer) {
+  .factory('ImagesFactory', function($q ,$cordovaCamera, $cordovaFile, $cordovaEmailComposer,$cordovaSocialSharing) {
 
     if (window.cordova) {
 
@@ -65,24 +65,47 @@ angular.module('starter')
     }
     function emailPdf(nameString) {
       var namePDF=cordova.file.externalRootDirectory+nameString+".pdf";
-      console.log(namePDF)
+      console.log("here",namePDF)
 
-      var email = {
-        to: 'sahar.pyaari@gmail.com',
-        cc: 'nooresahar95@gmail.com',
-        bcc: ['k122140@nu.edu.pk'],
-        attachments: [
-          namePDF
-        ],
-        subject: 'Cordova Email Composer Testing',
-        body: 'This is a testing email. Please find the Attachment',
-        isHtml: true
-      };
+      msg = "here's you attachments";
+      subject = "Attachments";
+      to = 'sahar.pyaari@gmail.com';
+      cc =  'nooresahar95@gmail.com';
+      bcc =  ['k122140@nu.edu.pk'];
 
-      $cordovaEmailComposer.open(email).then(null, function (response) {
-        console.log("here i am");
-        // user cancelled email
-      });
+      if (window.cordova ) {
+        console.log("maillllllllllllling");
+        $cordovaSocialSharing
+          .shareViaEmail(msg, subject,to, cc,bcc
+            ,namePDF)
+          .then(function (result) {
+
+          }, function (err) {
+            alert(err);
+            console.log(err);
+          });
+      } else {
+        console.warn('Unsupported platform');
+      }
+
+        //
+        // $cordovaSocialSharing
+        //   .shareViaEmail("sadas", "asdads"
+        //     ,"sadss@assdd.com")
+        //   .then(function (result) {
+        //
+        //   }, function (err) {
+        //     alert(err);
+        //     console.log("socail sharing::",err);
+        //   });
+      // } else {
+      //   console.warn('Unsupported platform');
+      // }
+
+      // $cordovaEmailComposer.open(email).then(null, function (response) {
+      //   console.log("here i am");
+      //   // user cancelled email
+      // });
 
     }
 
